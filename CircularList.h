@@ -7,9 +7,7 @@
 // #include "Line.h"
 // #include "Circle.h"
 // #include "Update.h"
-#include "Text.h"
-#include <cmath>
-#include <iostream>
+#include "Lab04Files/lib/Text.h"
 using namespace std;
 using CSC2110::String;
 
@@ -143,9 +141,8 @@ void CircularList<T>::remove(int index)
 {
    //DO THIS
    //remember to move loc and loc_pos to the location of the removal
-   //remember to delete the node after it has been removed from the list
-   loc = find(index);
-   loc_pos = index;
+   //remember to delete the node after it has been removed from the list 
+   DoubleNode<T>* prev;
    if (index >= 1 && index <= sze) 
    {
 	  
@@ -154,15 +151,19 @@ void CircularList<T>::remove(int index)
 		removeAll();
       }
       else
+	//use local variables
       {
-         //use local variables
-         DoubleNode<T>* prev = loc->getPrev();
-		 DoubleNode<T>* next = loc->getNext();
+		 
+
+         prev = find(index-1);
+		 DoubleNode<T>* curr = prev->getNext();
+		 DoubleNode<T>* next = curr->getNext();
 		 prev->setNext(next);
 		 next->setPrev(prev);
-		 loc->setNext(NULL);
-		 loc->setPrev(NULL);
-		 delete loc;
+		 loc_pos = index - 1;
+		 loc = prev;
+		 delete curr;
+				
       }
       sze--;
    } 
